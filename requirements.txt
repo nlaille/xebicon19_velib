@@ -1,3 +1,9 @@
 pandas
 numpy
 gmaps
+kepler
+matplotlib
+geopy
+descartes
+osmnx
+folium
