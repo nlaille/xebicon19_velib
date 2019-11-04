@@ -1,5 +1,9 @@
 FROM jupyter/scipy-notebook:1386e2046833
 
-RUN pip install nteract_on_jupyter gmaps bookstore
-RUN jupyter nbextension enable --py gmaps
-RUN jupyter serverextension enable --py bookstore
+COPY requirements.txt /tmp/requirements.txt
+
+RUN pip install -r /tmp/requirements.txt
+
+# Enable extensions
+
+COPY config/jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py

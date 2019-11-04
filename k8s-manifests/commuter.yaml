@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # This name uniquely identifies the service
+  name: commuter-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 4000
+      targetPort: 4000
+      protocol: TCP
+  selector:
+    # Looks for labels `app:commuter` in the namespace and applies the spec
+    app: commuter
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # This name uniquely identifies the Deployment
+  name: commuter
+spec:
+  selector:
+    matchLabels:
+      app: commuter # has to match .spec.template.metadata.labels
+  template:
+    metadata:
+      labels:
+        # This label is used as a selector in Service definition
+        app: commuter
+    spec:
+      # Volumes used by this deployment
+      containers:
+      - name: commuter
+        # Volume mounts for this container
+        # Pulls the lastest Minio image from Docker Hub
+        image: commuter:latest
+        imagePullPolicy: Never
+        env:
+        # MinIO access key and secret key
+        - name: COMMUTER_STORAGE_BACKEND
+          value: "s3"
+        - name: COMMUTER_BUCKET
+          value: "bookstore"
+        - name: COMMUTER_S3_KEY
+          value: "minio"
+        - name: COMMUTER_S3_SECRET
+          value: "minio123"
+        - name: COMMUTER_S3_ENDPOINT
+          value: "http://minio:9000"
+        ports:
+        - containerPort: 4000
