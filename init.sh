@@ -7,13 +7,13 @@ sudo apt install python3-rtree
 pip install jupyterlab
 
 pip install -r requirements.txt
-jupyter nbextension enable --py --sys-prefix widgetsnbextension
-jupyter nbextension enable --py --sys-prefix gmaps
+jupyter nbextension enable --py widgetsnbextension
+jupyter nbextension enable --py gmaps
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
-jupyter nbextension install --py --sys-prefix keplergl
-jupyter nbextension enable --py --sys-prefix keplergl
-jupyter nbextension enable --py --sys-prefix widgetsnbextension
+jupyter nbextension install --py keplergl
+jupyter nbextension enable --py keplergl
+jupyter nbextension enable --py widgetsnbextension
 jupyter labextension install @jupyter-widgets/jupyterlab-manager keplergl-jupyter
 
 jupyter lab build
