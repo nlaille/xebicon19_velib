@@ -21,7 +21,7 @@ Setup for jupyterhub installation
  
 Install jupyterhub
    
-    helm install --name jupyterhub jupyterhub/jupyterhub --values k8s-manifests/jupyterhub-values.yaml --timeout=300
+    helm install --name jupyterhub jupyterhub/jupyterhub --values k8s-manifests/jupyterhub-values.yaml --version 0.8.2 --timeout=300
 
  
 # Minio

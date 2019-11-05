@@ -40,7 +40,9 @@ hub:
     password:
   labels: {}
   annotations: {}
-  extraConfig: {}
+  extraConfig:
+    jupyterlab: |
+      c.Spawner.cmd = ['jupyter-labhub']
   extraConfigMap: {}
   extraEnv: {}
   extraContainers: []
@@ -48,7 +50,7 @@ hub:
   extraVolumeMounts: []
   image:
     name: jupyterhub/k8s-hub
-    tag: 'set-by-chartpress'
+    tag: '0.8.2'
     # pullSecrets:
     #   - secretName
   resources:
@@ -203,7 +205,7 @@ singleuser:
   networkTools:
     image:
       name: jupyterhub/k8s-network-tools
-      tag: 'set-by-chartpress'
+      tag: '0.8.2'
   cloudMetadata:
     enabled: false
     ip: 169.254.169.254
@@ -244,11 +246,27 @@ singleuser:
       volumeNameTemplate: volume-{username}{servername}
       storageAccessModes: [ReadWriteOnce]
   image:
-    name: jupyterhub/k8s-singleuser-sample
-    tag: 'set-by-chartpress'
+    name: jupyter/minimal-notebook
+    tag: 2343e33dec46
     pullPolicy: IfNotPresent
     # pullSecrets:
     #   - secretName
+  profileList:
+    - display_name: "Minimal environment"
+      description: "To avoid too much bells and whistles: Python."
+      default: true
+    - display_name: "Datascience environment"
+      description: "If you want the additional bells and whistles: Python, R, and Julia."
+      kubespawner_override:
+        image: jupyter/datascience-notebook:2343e33dec46
+    - display_name: "Spark environment"
+      description: "The Jupyter Stacks spark image!"
+      kubespawner_override:
+        image: jupyter/all-spark-notebook:2343e33dec46
+    - display_name: "Learning Data Science"
+      description: "Datascience Environment with Sample Notebooks"
+      kubespawner_override:
+        image: jupyter/datascience-notebook:2343e33dec46
   imagePullSecret:
     enabled: false
     registry:
@@ -266,7 +284,7 @@ singleuser:
     limits: {}
     guarantees: {}
   cmd: jupyterhub-singleuser
-  defaultUrl:
+  defaultUrl: "/lab"
   extraPodConfig: {}
 
 
@@ -316,7 +334,7 @@ prePuller:
     enabled: true
     image:
       name: jupyterhub/k8s-image-awaiter
-      tag: 'set-by-chartpress'
+      tag: '0.8.2'
   continuous:
     enabled: true
   extraImages: {}
