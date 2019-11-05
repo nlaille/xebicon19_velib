@@ -1,13 +1,3 @@
-Build image
-
-    docker build -t xebicon19_velib .
-    
-Run image
-
-    docker run -v $(pwd)/notebooks:/home/jovyan/notebooks -p 8888:8888 xebicon19_velib
-    # or
-    ./start-docker.sh
-    
 # Setup helm
 
     helm init
@@ -39,11 +29,6 @@ Configure mc client
 
     mc config host add local http://localhost:9000 minio minio123 --api "s3v4" --lookup "dns"
 
-Edit `config/jupyter_notebook_config.py` with minio
-
-    kubectl get pods
-    kubectl logs minio-6484f9878d-c4kqb
-
 # Commuter
 
 Create docker image, to access it from minikube `eval $(docker-machine env -u)` 
@@ -53,3 +38,9 @@ Create docker image, to access it from minikube `eval $(docker-machine env -u)`
 Start commuter on kubernetes
 
     kubectl apply -f k8s-manifests/commuter.yaml
+
+# Build xebicon jupyter image
+
+Build image
+
+    cd xebicon-notebook && docker build -t xebicon19_velib .
