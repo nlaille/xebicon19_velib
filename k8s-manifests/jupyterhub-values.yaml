@@ -7,6 +7,7 @@ proxy:
   secretToken: '55a814cdf1b3eb163833bf2e6264f3992e7eb0143ececf434f496deb6daf00dc'
 
 singleuser:
+  extraTolerations: []
   profileList:
     - display_name: "Xebicon nteract"
       description: "Xebicon nteract"
