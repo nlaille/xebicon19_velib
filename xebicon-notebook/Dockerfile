@@ -6,4 +6,4 @@ RUN pip install -r /tmp/requirements.txt
 
 # Enable extensions
 
-COPY config/jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py
+COPY jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py

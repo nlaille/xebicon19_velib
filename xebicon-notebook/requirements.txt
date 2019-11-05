@@ -1,0 +1,11 @@
+pandas
+numpy
+gmaps
+kepler
+matplotlib
+geopy
+descartes
+osmnx
+folium
+nteract_on_jupyter
+bookstore==2.2.1

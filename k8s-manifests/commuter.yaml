@@ -43,6 +43,8 @@ spec:
           value: "s3"
         - name: COMMUTER_BUCKET
           value: "bookstore"
+        - name: S3_FORCE_PATH_STYLE
+          value: "true"
         - name: COMMUTER_S3_KEY
           value: "minio"
         - name: COMMUTER_S3_SECRET
