@@ -8,4 +8,5 @@ descartes
 osmnx
 folium
 nteract_on_jupyter
-bookstore==2.2.1
+# Patch for published url
+git+https://github.com/akinsella/bookstore.git@url-published-patch
