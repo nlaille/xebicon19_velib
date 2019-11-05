@@ -10,3 +10,4 @@ folium
 nteract_on_jupyter
 # Patch for published url
 git+https://github.com/akinsella/bookstore.git@url-published-patch
+papermill
