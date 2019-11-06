@@ -8,24 +8,24 @@ proxy:
 
 singleuser:
   extraTolerations: []
+  extraEnv:
+    AWS_ACCESS_KEY_ID: minio
+    AWS_SECRET_ACCESS_KEY: minio123
+    AWS_S3_ENDPOINT: http://minio:9000/
+  default_url: "/lab/"
+  image:
+    name: xebicon19_velib
+    tag: latest
   profileList:
-    - display_name: "Xebicon nteract"
-      description: "Xebicon nteract"
-      kubespawner_override:
-        image: xebicon19_velib:latest
-        default_url: "/nteract"
-        environment:
-          BOOKSTORE_S3_BUCKET: bookstore
-          BOOKSTORE_S3_ACCESS_KEY_ID: minio
-          BOOKSTORE_S3_ACCESS_KEY: minio123
-          BOOKSTORE_S3_ENDPOINT_URL: http://minio:9000/
-    - display_name: "Xebicon jupyter"
-      description: "Xebicon notebooks"
-      kubespawner_override:
-        image: xebicon19_velib:latest
-        default_url: "/tree"
-        environment:
-          BOOKSTORE_S3_BUCKET: bookstore
-          BOOKSTORE_S3_ACCESS_KEY_ID: minio
-          BOOKSTORE_S3_ACCESS_KEY: minio123
-          BOOKSTORE_S3_ENDPOINT_URL: http://minio:9000/
+    - display_name: "Minimal environment"
+      description: "To avoid too much bells and whistles: Python."
+      default: true
+    - display_name: "Datascience environment"
+      description: "If you want the additional bells and whistles: Python, R, and Julia."
+      default: true
+    - display_name: "Spark environment"
+      description: "The Jupyter Stacks spark image!"
+      default: true
+    - display_name: "Learning Data Science"
+      description: "Datascience Environment with Sample Notebooks"
+      default: true

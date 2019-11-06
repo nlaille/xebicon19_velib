@@ -15,6 +15,9 @@ persistence:
 ## Enabling `defaultBucket` will take priority over this list
 ##
 buckets:
-  - name: bookstore
+  - name: velib-usage
+    policy: none
+    purge: false
+  - name: smovengo
     policy: none
     purge: false

@@ -1,13 +1,14 @@
+# Transformation
 pandas
 numpy
-gmaps
+# Dataviz
 kepler
 matplotlib
 geopy
 descartes
 osmnx
 folium
-nteract_on_jupyter
-# Patch for published url
-git+https://github.com/akinsella/bookstore.git@url-published-patch
+# Execution
 papermill
+# Aws Cli
+awscli
