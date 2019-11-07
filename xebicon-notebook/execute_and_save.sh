@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [[ "$#" -ne 3 ]]; then
-    echo "Usage : [YEAR] [MONTH] [DAY]"
+if [[ "$#" -ne 4 ]]; then
+    echo "Usage : [YEAR] [MONTH] [DAY] [HOUR]"
     exit
 fi
 
 YEAR=$1
 MONTH=$2
 DAY=$3
+HOUR=$4
 
-echo "Executing script for $1-$2-$3..."
+echo "Executing script for $1-$2-$3 - $4h..."
 
-papermill velib_stations_usage.ipynb /tmp/output.ipynb -p year=$YEAR -p month=$MONTH -p day=$DAY
-aws s3 cp /tmp/output.ipynb s3://velib-usage/$1-$2-$3.ipynb
-
+papermill velib_stations_usage.ipynb /tmp/output.ipynb -p year=$YEAR -p month=$MONTH -p day=$DAY -p hour=$HOUR
+aws s3 cp /tmp/output.ipynb s3://velib-usage/$YEAR-$MONTH-$DAY-$HOUR.ipynb
