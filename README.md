@@ -2,6 +2,12 @@
 
     helm init
   
+# BinderHub
+
+    helm install stable/docker-registry --name=binder-docker-registry --namespace=binder -f k8s-manifests/docker-registry-values.yaml 
+    helm install jupyterhub/binderhub --version=0.2.0-3b53fce  --name=binderhub --namespace=binder -f k8s-manifests/binderhub-values.yaml
+  
+  
 # JupyterHub
 
 Setup for jupyterhub installation
