@@ -1,52 +1,51 @@
-# Setup helm
+# Setup kubernetes
+
+## Setup helm
 
     helm init
+    helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
+    helm repo update
+    
+## Create namespace
+
+    kubectl create namespace binderhub
+    kubectl create namespace jupyterhub
+    
+## Install traefik
+
+    helm install stable/traefik --name traefix --values k8s-manifests/traefik-values.yaml
   
 # BinderHub
 
-    helm install stable/docker-registry --name=binder-docker-registry --namespace=binder -f k8s-manifests/docker-registry-values.yaml 
-    helm install jupyterhub/binderhub --version=0.2.0-3b53fce  --name=binderhub --namespace=binder -f k8s-manifests/binderhub-values.yaml
-  
-  
-# JupyterHub
+    helm install jupyterhub/binderhub --version=0.2.0-d2e3b8b --name=binderhub --namespace=binderhub -f k8s-manifests/binderhub-values.yaml
+    kubectl apply -n binderhub -f k8s-manifests/binderhub-ingress.yaml
 
-Setup for jupyterhub installation
+# Demo
 
-    helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
-    helm repo update
- 
-Install jupyterhub
+## Jupyterhub
    
-    helm install --name jupyterhub jupyterhub/jupyterhub --values k8s-manifests/jupyterhub-values.yaml --version 0.8.2 --timeout=300
-
- 
-# Minio
-
-Start minio on kubernetes 
-
-    helm install --name minio --values k8s-manifests/minio-values.yaml stable/minio
-  
-Forward minio port
-
-    export POD_NAME=$(kubectl get pods --namespace default -l "release=minio" -o jsonpath="{.items[0].metadata.name}")
-    kubectl port-forward $POD_NAME 9000 --namespace default
+    helm install jupyterhub/jupyterhub --version 0.8.2 --name=jupyterhub --namespace=jupyterhub --values k8s-manifests/jupyterhub-values.yaml --timeout=300
     
-Configure mc client
+## Minio
 
-    mc config host add local http://localhost:9000 minio minio123 --api "s3v4" --lookup "dns"
+    helm install stable/minio --name minio --values k8s-manifests/minio-values.yaml 
 
-# Commuter
+## Commuter
 
-Create docker image, to access it from minikube `eval $(docker-machine env -u)` 
-
+    # Creata docker image
     docker build -t commuter:last . -f commuter/Dockerfile
-    
-Start commuter on kubernetes
-
+    # Deploy commuter
     kubectl apply -f k8s-manifests/commuter.yaml
 
-# Build xebicon jupyter image
+## Build jupyter image
 
-Build image
+    pushd jupyter-env && docker build -t jupyter-env:latest . && popd
+    
+# Add ingress hostname to /etc/hosts
 
-    cd xebicon-notebook && docker build -t xebicon19_velib .
+    INGRESSES=$(kubectl --all-namespaces=true get ingress -o jsonpath='{.items[*].spec.rules[*].host}')
+    echo "127.0.0.1 $INGRESSES" | sudo tee -a /etc/hosts
+    # Still need proxy-public.. Find a way to remove proxy-public
+    echo "127.0.0.1 proxy-public" | sudo tee -a /etc/hosts
+
+

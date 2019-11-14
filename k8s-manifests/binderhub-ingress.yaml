@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: binder-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: binderhub.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: binder
+          servicePort: 80
+  - host: binderhub-jupyterhub.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: proxy-public
+          servicePort: 80

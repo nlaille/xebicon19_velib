@@ -1,0 +1,9 @@
+dashboard:
+  enabled: true
+  domain: localhost
+kubernetes:
+  namespaces:
+    - default
+    - kube-system
+    - binderhub
+    - jupyterhub

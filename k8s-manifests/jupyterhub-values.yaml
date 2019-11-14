@@ -11,10 +11,10 @@ singleuser:
   extraEnv:
     AWS_ACCESS_KEY_ID: minio
     AWS_SECRET_ACCESS_KEY: minio123
-    AWS_S3_ENDPOINT: http://minio:9000/
+    AWS_S3_ENDPOINT: http://minio.default.svc.cluster.local:9000
   default_url: "/lab/"
   image:
-    name: xebicon19_velib
+    name: jupyter-env
     tag: latest
   profileList:
     - display_name: "Minimal environment"
@@ -29,3 +29,10 @@ singleuser:
     - display_name: "Learning Data Science"
       description: "Datascience Environment with Sample Notebooks"
       default: true
+
+ingress:
+  enabled: true
+  hosts:
+    - jupyterhub.local
+  annotations:
+    kubernetes.io/ingress.class: traefik

@@ -1,23 +1,28 @@
-jupyterhub:
-  hub:
-    service:
-      ports: {}
-    services:
-      binder:
-        apiToken: "0581f345e93fc5ebf645d1de713dd87e2f0d3949ab831b7f0f03830021653286"
-  proxy:
-    secretToken: "b1510747ecc49423f7a05d6d31f2abd30413d669255f995a833754a4a12b991e"
-    service:
-      nodePorts: {}
-
-registry:
-  url: "http://binder-docker-registry:5000"
+service:
+  type: ClusterIP
 
 config:
   BinderHub:
-    use_registry: true
-    image_prefix: "binder-docker-registry:5000/binderhub-"
-    username: 'user'
-    password: 'password'
-  DockerRegistry:
-    token_url: None
+    debug: true
+    use_registry: false
+    image_prefix: "binderhub-images-"
+    hub_url: 'http://proxy-public'
+
+jupyterhub:
+  hub:
+    services:
+      binder:
+        apiToken: "0581f345e93fc5ebf645d1de713dd87e2f0d3949ab831b7f0f03830021653286"
+    deploymentStrategy:
+      # sqlite-pvc backed hub requires Recreate strategy to work
+      type: Recreate
+      # This is required for upgrading to work
+      rollingUpdate:
+  proxy:
+    secretToken: "b1510747ecc49423f7a05d6d31f2abd30413d669255f995a833754a4a12b991e"
+    service:
+      type: ClusterIP
+
+
+imageCleaner:
+  enabled: false
