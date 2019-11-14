@@ -20,3 +20,10 @@ spec:
         backend:
           serviceName: proxy-public
           servicePort: 80
+  - host: proxy-public
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: proxy-public
+          servicePort: 80

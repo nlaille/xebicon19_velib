@@ -13,11 +13,8 @@ jupyterhub:
     services:
       binder:
         apiToken: "0581f345e93fc5ebf645d1de713dd87e2f0d3949ab831b7f0f03830021653286"
-    deploymentStrategy:
-      # sqlite-pvc backed hub requires Recreate strategy to work
-      type: Recreate
-      # This is required for upgrading to work
-      rollingUpdate:
+    db:
+      type: "sqlite-memory"
   proxy:
     secretToken: "b1510747ecc49423f7a05d6d31f2abd30413d669255f995a833754a4a12b991e"
     service:
