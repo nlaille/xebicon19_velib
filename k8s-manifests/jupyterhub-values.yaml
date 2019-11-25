@@ -14,6 +14,7 @@ singleuser:
     AWS_ACCESS_KEY_ID: minio
     AWS_SECRET_ACCESS_KEY: minio123
     AWS_S3_ENDPOINT: http://minio.default.svc.cluster.local:9000
+    BOTO3_ENDPOINT_URL: http://minio.default.svc.cluster.local:9000
   default_url: "/lab/"
   image:
     name: jupyter-env
@@ -31,6 +32,15 @@ singleuser:
     - display_name: "Learning Data Science"
       description: "Datascience Environment with Sample Notebooks"
       default: true
+
+prePuller:
+  hook:
+    enabled: false
+  continuous:
+    enabled: false
+
+cull:
+  enabled: false
 
 ingress:
   enabled: true

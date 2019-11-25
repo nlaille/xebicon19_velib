@@ -33,7 +33,7 @@
 ## Commuter
 
     # Creata docker image
-    docker build -t commuter:last . -f commuter/Dockerfile
+    docker build -t commuter:latest . -f commuter/Dockerfile
     # Deploy commuter
     kubectl apply -f k8s-manifests/commuter.yaml
 

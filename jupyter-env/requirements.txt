@@ -2,12 +2,9 @@
 pandas
 numpy
 # Dataviz
-kepler
 matplotlib
 geopy
 descartes
-osmnx
-folium
 # Execution
 papermill
 # Aws Cli
