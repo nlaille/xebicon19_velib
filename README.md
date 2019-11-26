@@ -14,11 +14,6 @@
 ## Install traefik
 
     helm install stable/traefik --name traefix --values k8s-manifests/traefik-values.yaml
-  
-# BinderHub
-
-    helm install jupyterhub/binderhub --version=0.2.0-d2e3b8b --name=binderhub --namespace=binderhub -f k8s-manifests/binderhub-values.yaml
-    kubectl apply -n binderhub -f k8s-manifests/binderhub-ingress.yaml
 
 # Demo
 
@@ -41,11 +36,20 @@
 
     pushd jupyter-env && docker build -t jupyter-env:latest . && popd
     
-# Add ingress hostname to /etc/hosts
+## Add ingress hostname to /etc/hosts
+
+    INGRESSES=$(kubectl --all-namespaces=true get ingress -o jsonpath='{.items[*].spec.rules[*].host}')
+    echo "127.0.0.1 $INGRESSES" | sudo tee -a /etc/hosts
+
+
+# BinderHub
+
+    helm install jupyterhub/binderhub --version=0.2.0-d2e3b8b --name=binderhub --namespace=binderhub -f k8s-manifests/binderhub-values.yaml
+    kubectl apply -n binderhub -f k8s-manifests/binderhub-ingress.yaml
+    
+## Add ingress hostname to /etc/hosts
 
     INGRESSES=$(kubectl --all-namespaces=true get ingress -o jsonpath='{.items[*].spec.rules[*].host}')
     echo "127.0.0.1 $INGRESSES" | sudo tee -a /etc/hosts
     # Still need proxy-public.. Find a way to remove proxy-public
     echo "127.0.0.1 proxy-public" | sudo tee -a /etc/hosts
-
-

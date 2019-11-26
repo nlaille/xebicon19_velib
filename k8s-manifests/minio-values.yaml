@@ -21,3 +21,10 @@ buckets:
   - name: smovengo
     policy: none
     purge: false
+
+ingress:
+  enabled: true
+  hosts:
+    - minio.local
+  annotations:
+    kubernetes.io/ingress.class: traefik
